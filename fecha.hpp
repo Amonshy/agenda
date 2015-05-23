@@ -11,7 +11,7 @@
 //!  Definición de la clase Fecha
 class Fecha 
 {
-  //! \name Atributos privados de la clase Paciente
+  //! \name Atributos privados de la clase Fecha
 private:
   int _dia;	//!< Día de la fecha introducida
   int _mes;	//!< Més de la fecha introducida
