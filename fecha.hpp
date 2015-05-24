@@ -18,7 +18,43 @@ private:
   int _year;	//!< Año de la fecha introducida
   
 public:
+  //Observers
   
+  //! \name Funciones de consulta de Fecha
+  
+  inline int getDia()const
+  {
+    return (_dia);
+  }
+  
+  inline int getMes()const
+  {
+    return (_mes);
+  }
+  
+  inline int getYear()const
+  {
+    return (_year);
+  }
+  
+  //Modifiers
+  
+  //! \name Funciones de modificación de Fecha
+  
+  inline void setDia(const int & nuevoDia)
+  {
+    _dia=nuevoDia;
+  }
+  
+  inline void setMes(const int & nuevoMes)
+  {
+    _mes=nuevoMes;
+  }
+  
+  inline void setYear(const int & nuevoYear)
+  {
+    _year=nuevoYear;
+  }
   
 };
 
