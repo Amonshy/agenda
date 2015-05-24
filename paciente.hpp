@@ -24,7 +24,6 @@ private:
   
 public:
   //Observers
-  
   //! \name Funciones de consulta de Paciente
   
   inline std::string getNombre()const
@@ -48,7 +47,6 @@ public:
   }
   
   //Modifiers
-  
   //! \name Funciones de modificación de Paciente
   
   inline void setNombre(const std::string & nuevoNombre)

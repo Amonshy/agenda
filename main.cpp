@@ -5,8 +5,9 @@
   \date   23/05/2015
 */
 #include <iostream>
-#include "macros.hpp"
 #include <stdio.h>
+#include "macros.hpp"
+#include "paciente.hpp"
 
 /*! 
   \fn     int main()

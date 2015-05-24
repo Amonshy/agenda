@@ -8,6 +8,7 @@
 #ifndef _CITAS_HPP_
 #define _CITAS_HPP_
 #include "fecha.hpp"
+#include <string>
 
 //!  Definición de la clase Fecha
 class Cita

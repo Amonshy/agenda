@@ -19,7 +19,6 @@ private:
   
 public:
   //Observers
-  
   //! \name Funciones de consulta de Fecha
   
   inline int getDia()const
@@ -38,7 +37,6 @@ public:
   }
   
   //Modifiers
-  
   //! \name Funciones de modificación de Fecha
   
   inline void setDia(const int & nuevoDia)
