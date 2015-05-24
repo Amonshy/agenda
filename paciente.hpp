@@ -23,7 +23,53 @@ private:
   Cita _citaPaciente;		//!< Cita del paciente
   
 public:
+  //Observers
   
+  //! \name Funciones de consulta de Paciente
+  
+  inline std::string getNombre()const
+  {
+    return (_nombre);
+  }
+  
+  inline std::string getApellidos()const
+  {
+    return (_apellidos);
+  }
+  
+  inline std::string getDni()const
+  {
+    return (_DNI);
+  }
+  
+  inline int getTelefono()const
+  {
+    return (_telefono); 
+  }
+  
+  //Modifiers
+  
+  //! \name Funciones de modificación de Paciente
+  
+  inline void setNombre(const std::string & nuevoNombre)
+  {
+    _nombre=nuevoNombre;
+  }
+  
+  inline void setApellidos(const std::string & nuevosApellidos)
+  {
+    _apellidos=nuevosApellidos;
+  }
+  
+  inline void setDni(const std::string & nuevoDni)
+  {
+    _DNI=nuevoDni;
+  }
+  
+  inline void setTelefono(const int &nuevoTelefono)
+  {
+    _telefono=nuevoTelefono;
+  }
 };
 
 #endif
