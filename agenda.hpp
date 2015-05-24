@@ -18,6 +18,15 @@ private:
   std::string _baseDeDatos;
   
 public:
+  
+  //Constructor
+  //! \name Constructor de la clase Agenda
+  
+  Agenda(const std::string &nuevaBaseDeDatos="bbdd")
+  {
+    _baseDeDatos=nuevaBaseDeDatos;
+  }
+  
   //Observers
   //! \name Funciones de consulta de Agenda
   
