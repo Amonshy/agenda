@@ -20,7 +20,41 @@ private:
   int _minutosCita;	//!< Minutos de la cita
   
 public:
+  //Observers
+  //! \name Funciones de consulta de Fecha
   
+  inline std::string getMotivo()const
+  {
+    return (_motivo);
+  }
+  
+  inline int getHoraCita()const
+  {
+    return (_horaCita);
+  }
+  
+  inline int getMinutosCita()const
+  {
+    return (_minutosCita);
+  }
+  
+  //Modifiers
+  //! \name Funciones de modificación de Cita
+  
+  inline void setMotivo(const std::string & nuevoMotivo)
+  {
+    _motivo=nuevoMotivo;
+  }
+  
+  inline void setHoraCita(const int & nuevaHoraCita)
+  {
+    _horaCita=nuevaHoraCita;
+  }
+  
+  inline void setMinutosCita(const int & nuevoMinutosCita)
+  {
+    _minutosCita=nuevoMinutosCita;
+  }
   
 };
 #endif
