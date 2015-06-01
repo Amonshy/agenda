@@ -7,7 +7,7 @@
 #include <iostream>
 #include <stdio.h>
 #include "macros.hpp"
-#include "paciente.hpp"
+#include "agenda.hpp"
 
 /*! 
   \fn     int main()
@@ -17,8 +17,10 @@
 int main(int argc, char **argv) 
 {
   int opcion;
+  Paciente p1;
    
   do{
+    BORRAR;
     LUGAR(5,10);
     std::cout << "Bienvenido al menú de selección: " << std::endl;
     LUGAR(6,10);
@@ -43,7 +45,9 @@ int main(int argc, char **argv)
     switch(opcion)
     {  
       case 1:
-	
+	BORRAR;
+	p1=Paciente::rellenarDatosPaciente();
+
 	break;
 	
       case 2:
