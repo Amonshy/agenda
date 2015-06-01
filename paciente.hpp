@@ -46,6 +46,16 @@ public:
     return (_telefono); 
   }
   
+  inline Fecha getFechaNacimiento()const
+  {
+    return (_fechaNacimiento);
+  }
+  
+  inline Cita getCita()const
+  {
+    return (_citaPaciente); 
+  }
+  
   //Modifiers
   //! \name Funciones de modificación de Paciente
   
