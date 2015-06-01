@@ -68,6 +68,8 @@ public:
   {
     _telefono=nuevoTelefono;
   }
+  
+  static Paciente rellenarDatosPaciente();
 };
 
 #endif
