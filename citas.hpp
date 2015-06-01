@@ -39,6 +39,11 @@ public:
     return (_minutosCita);
   }
   
+  inline Fecha getFechaCita()const
+  {
+    return (_fechaCita);
+  }
+  
   //Modifiers
   //! \name Funciones de modificación de Cita
   
