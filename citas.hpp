@@ -39,9 +39,19 @@ public:
     return (_minutosCita);
   }
   
-  inline Fecha getFechaCita()const
+  inline int getDiaFechaCita()const
   {
-    return (_fechaCita);
+    return (_fechaCita.getDia());
+  }
+  
+  inline int getMesFechaCita()const
+  {
+    return (_fechaCita.getMes());
+  }
+  
+  inline int getYearFechaCita()const
+  {
+    return (_fechaCita.getYear());
   }
   
   //Modifiers
@@ -60,6 +70,21 @@ public:
   inline void setMinutosCita(const int & nuevoMinutosCita)
   {
     _minutosCita=nuevoMinutosCita;
+  }
+  
+  inline void setDiaFechaCita(const int & dia)
+  {
+    _fechaCita.setDia(dia);
+  }
+  
+  inline void setMesFechaCita(const int & mes)
+  {
+    _fechaCita.setMes(mes);
+  }
+  
+  inline void setYearFechaCita(const int & year)
+  {
+    _fechaCita.setYear(year);
   }
   
 };
