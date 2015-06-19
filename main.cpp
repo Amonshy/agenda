@@ -18,23 +18,24 @@ int main(int argc, char **argv)
 {
   int opcion;
   Paciente p1;
+  Agenda agendaDentista;
    
   do{
     BORRAR;
     LUGAR(5,10);
     std::cout << "Bienvenido al menú de selección: " << std::endl;
     LUGAR(6,10);
-    std::cout << "1. Añadir paciente" << std::endl;
+    std::cout << "1. Buscar paciente" << std::endl;
     LUGAR(7,10);
-    std::cout << "2. Modificar paciente" << std::endl;
+    std::cout << "2. Añadir paciente" << std::endl;
     LUGAR(8,10);
-    std::cout << "3. Buscar paciente" << std::endl;
+    std::cout << "3. Modificar paciente" << std::endl;
     LUGAR(9,10);
-    std::cout << "4. Imprimir agenda" << std::endl;
+    std::cout << "4. Eliminar paciente" << std::endl;
     LUGAR(10,10);
-    std::cout << "5. Copia de seguridad" << std::endl;
+    std::cout << "5. Listar agenda" << std::endl;
     LUGAR(11,10);
-    std::cout << "6. Borrar paciente" << std::endl;
+    std::cout << "6. Copia de seguridad" << std::endl;
     LUGAR(12,10);
     std::cout << "7. Salir" << std::endl;
 
@@ -45,13 +46,13 @@ int main(int argc, char **argv)
     switch(opcion)
     {  
       case 1:
-	BORRAR;
-	p1=Paciente::rellenarDatosPaciente();
-
+	
 	break;
 	
       case 2:
-	
+	BORRAR;
+	p1=Paciente::rellenarDatosPaciente();
+	agendaDentista.guardarEnBaseDeDatos(p1);
 	break;
 	
       case 3:
