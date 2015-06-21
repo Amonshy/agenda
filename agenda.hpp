@@ -16,15 +16,17 @@ class Agenda
   //! \name Atributos privados de la clase Agenda
 private:
   std::string _baseDeDatos;
+  std::string _baseDeDatosAuxiliar;
   
 public:
   
   //Constructor
   //! \name Constructor de la clase Agenda
   
-  Agenda(const std::string &nuevaBaseDeDatos="bbdd")
+  Agenda(const std::string &nuevaBaseDeDatos="bbdd", const std::string &nuevaBaseDeDatosAux="bbddAux")
   {
     _baseDeDatos=nuevaBaseDeDatos;
+    _baseDeDatosAuxiliar=nuevaBaseDeDatosAux;
   }
   
   //Observers
@@ -35,9 +37,18 @@ public:
     return (_baseDeDatos);
   }
   
+  inline std::string getBaseDeDatosAuxiliar()const
+  {
+    return (_baseDeDatosAuxiliar);
+  }
+  
   void guardarEnBaseDeDatos(const Paciente& p1)const;
   
   void listarBaseDeDatos()const;
+  
+  int eliminarDeBaseDeDatos(const std::string& nombreEliminar)const;
+  
+  void buscarPacienteEnBaseDeDatos(const std::string &nombrePaciente)const;
   
 protected:
   

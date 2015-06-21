@@ -8,10 +8,11 @@ using namespace std;
 void Agenda::guardarEnBaseDeDatos(const Paciente &p1) const
 {
   std::ofstream ficheroSalida;
-  ficheroSalida.open(_baseDeDatos, ios::app);
+  ficheroSalida.open(getBaseDeDatos(), ios::app);
   
   if(!ficheroSalida)
   {
+    LUGAR(14,10);
     std::cout << "Error al abrir el fichero" << std::endl;
     exit (-1);
   }
@@ -32,7 +33,15 @@ void Agenda::guardarEnBaseDeDatos(const Paciente &p1) const
 void Agenda::listarBaseDeDatos() const
 {
   std::ifstream ficheroEntrada;
-  ficheroEntrada.open(_baseDeDatos);
+  ficheroEntrada.open(getBaseDeDatos());
+  
+  if(!ficheroEntrada)
+  {
+    LUGAR(5,10);
+    std::cout << "Error al abrir el fichero" << std::endl;
+    exit (-1);
+  }
+  
   std::string horaC, minutosC, dni, aux;
   std::string diaN, mesN, yearN, diaC, mesC, yearC;
   std::string nombre, apellidos, telefono, motivo;
@@ -73,10 +82,52 @@ void Agenda::listarBaseDeDatos() const
       LUGAR(i,153);
       std::cout << horaC << ":" << minutosC;
     }
-    i+=1;
-    j++; //Para la posición
+    i+=1; // Se utiliza para la correcta visualización
+    j++; // Para la posición
     
   }
-
   
 }
+
+int Agenda::eliminarDeBaseDeDatos(const string& nombreEliminar) const
+{
+  std::ifstream ficheroEntrada;
+  std::ofstream ficheroSalida;
+  std::string nombre, aux;
+  
+  ficheroEntrada.open(getBaseDeDatos());
+  ficheroSalida.open(getBaseDeDatosAuxiliar());
+  
+  if(!ficheroEntrada or !ficheroSalida)
+  {
+    LUGAR(7,10);
+    std::cout << "Error al abrir el fichero";
+    exit (-1);
+  }
+  
+  while(getline(ficheroEntrada, nombre, ';') and getline(ficheroEntrada, aux, '\n'))
+  {
+    if(nombre.compare(nombreEliminar)==0)
+    {
+      LUGAR(7,10);
+      std::cout << "Hay una coincidencia";
+    }
+    else
+    {
+      ficheroSalida << nombre << ";" << aux << "\n";
+    }
+  }
+  
+  remove(getBaseDeDatos().c_str());
+  rename(getBaseDeDatosAuxiliar().c_str(),getBaseDeDatos().c_str());
+  
+  return(0);
+
+}
+
+void Agenda::buscarPacienteEnBaseDeDatos(const string& nombrePaciente) const
+{
+
+}
+
+
