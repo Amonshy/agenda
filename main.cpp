@@ -64,7 +64,8 @@ int main(int argc, char **argv)
 	break;
 	
       case 5:
-	
+	BORRAR;
+	agendaDentista.listarBaseDeDatos();
 	break;
 	
       case 6:
