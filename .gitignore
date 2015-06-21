@@ -1,3 +1,6 @@
 /.kdev4/
 /build/
 *.o
+/agenda.x
+/automatico
+/automatico~
