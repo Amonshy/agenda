@@ -35,6 +35,10 @@ public:
     return (_baseDeDatos);
   }
   
+  void guardarEnBaseDeDatos(const Paciente& p1)const;
+  
+  void listarBaseDeDatos()const;
+  
 protected:
   
   //Modifiers
