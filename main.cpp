@@ -19,6 +19,7 @@ int main(int argc, char **argv)
   int opcion;
   Paciente p1;
   Agenda agendaDentista;
+  std::string nombre;
    
   do{
     BORRAR;
@@ -60,7 +61,11 @@ int main(int argc, char **argv)
 	break;
       
       case 4:
-	
+	BORRAR;
+	LUGAR(5,10);
+	std::cout << "Introduzca el nombre del paciente a eliminar: ";
+	std::cin >> nombre;
+	agendaDentista.eliminarDeBaseDeDatos(nombre);
 	break;
 	
       case 5:
