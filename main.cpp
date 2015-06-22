@@ -20,9 +20,10 @@ int main(int argc, char **argv)
   Paciente p1;
   Agenda agendaDentista;
   std::string nombre, dni;
-  int borrar;
+  int borrar, modificar=0;
    
   do{
+    modificar=0;
     BORRAR;
     LUGAR(5,10);
     std::cout << "Bienvenido al menú de selección: " << std::endl;
@@ -79,6 +80,26 @@ int main(int argc, char **argv)
 	LUGAR(5,10);
 	std::cout << "Introduzca el dni del paciente a modificar: ";
 	std::cin >> dni;
+	
+	modificar=agendaDentista.modificarPacienteEnBaseDeDatos(dni);
+	if(modificar==0)
+	{
+	  LUGAR(7,10);
+	  std::cout << "No se ha encontrado ninguna coincidencia con el dni: " << dni;
+	}
+	else
+	{
+	  if(modificar==10)
+	  {
+	    LUGAR(7,10);
+	    std::cout << "Ha decidido abortar la operación de modificación";
+	  }
+	  else
+	  {
+	    LUGAR(7,10);
+	    std::cout << "La modificación ha sido un exito";
+	  }
+	}
 	break;
       
       case 4:
@@ -97,6 +118,7 @@ int main(int argc, char **argv)
 	{
 	  LUGAR(7,10);
 	  std::cout << "No se ha encontrado ninguna coincidencia";
+	  getchar();
 	}
 	break;
 	
@@ -114,6 +136,7 @@ int main(int argc, char **argv)
 	INVERSO;
 	std::cout << "continuar"; 
 	APAGA;
+	getchar();
 	getchar();
 	BORRAR;
 	agendaDentista.listarBaseDeDatos();
@@ -142,7 +165,7 @@ int main(int argc, char **argv)
     INVERSO;
     std::cout << "continuar"; 
     APAGA;
-    if(opcion==1 or opcion==5)
+    if(opcion==1 or opcion==5 or modificar==1 or modificar==2 or modificar==10)
     {
       getchar();
     }
