@@ -41,7 +41,7 @@ Paciente Paciente::rellenarDatosPaciente()
   std::cout << "Introduzca la fecha de nacimiento (DD/MM/YYYY): ";
   std::cin >> aux;
   
-  //Obtenemos la posicón de la primera barra
+  //Obtenemos la posición de la primera barra
   posicionBarra=aux.find_first_of("/");
   aux2= aux.substr(0,posicionBarra);
   
