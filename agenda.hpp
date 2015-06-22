@@ -50,6 +50,8 @@ public:
   
   void buscarPacienteEnBaseDeDatos(const std::string &nombrePaciente)const;
   
+  int modificarPacienteEnBaseDeDatos(const std::string& DNI)const;
+  
 protected:
   
   //Modifiers
