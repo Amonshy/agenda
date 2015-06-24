@@ -71,7 +71,7 @@ int main(int argc, char **argv)
 	
       case 2:
 	BORRAR;
-	p1=Paciente::rellenarDatosPaciente();
+	p1.rellenarDatosPaciente();
 	agendaDentista.guardarEnBaseDeDatos(p1);
 	break;
 	
