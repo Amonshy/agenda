@@ -21,7 +21,20 @@ void Agenda::guardarEnBaseDeDatos(const Paciente &p1) const
   ficheroSalida << p1.getNombre() << ";" << p1.getApellidos() << ";" << p1.getDni() << ";" << p1.getFechaNacimiento().getDia() << ";"
   << p1.getFechaNacimiento().getMes() << ";" << p1.getFechaNacimiento().getYear() << ";" << p1.getTelefono() << ";" << p1.getCita().getDiaFechaCita() 
   << ";" << p1.getCita().getMesFechaCita() << ";" << p1.getCita().getYearFechaCita() << ";" << p1.getCita().getMotivo() << ";" 
-  << p1.getCita().getHoraCita() << ";" << p1.getCita().getMinutosCita() << ";" << "\n";
+  << p1.getCita().getHoraCita() << ";" << p1.getCita().getMinutosCita() << ";";
+  
+  if(p1.getHistorial().size()>0)
+  {
+    unsigned int i=0;
+    while(i<p1.getHistorial().size())
+    {
+      ficheroSalida << p1.getHistorial().at(i).getDiaFechaCita() << ";" << p1.getHistorial().at(i).getMesFechaCita() << ";" << p1.getHistorial().at(i).getYearFechaCita() << ";"
+      << p1.getHistorial().at(i).getMotivo() << ";" << p1.getHistorial().at(i).getHoraCita() << ";" << p1.getHistorial().at(i).getMinutosCita() << ";"; 
+      i++;
+    }
+  }
+  
+  ficheroSalida << "\n";
   
   LUGAR(14,10);
   std::cout << "Paciente añadido correctamente en el fichero correctamente en el fichero." << std::endl;
