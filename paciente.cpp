@@ -2,10 +2,8 @@
 #include <iostream>
 #include "macros.hpp"
 
-Paciente Paciente::rellenarDatosPaciente()
+void Paciente::rellenarDatosPaciente()
 {
-  Paciente p1;
-
   int posicionBarra, posicionBarra2;
   std::string aux, aux2;
   std::string cita;
@@ -15,7 +13,7 @@ Paciente Paciente::rellenarDatosPaciente()
   //NOMBRE DEL PACIENTE
   LUGAR(5,10);
   std::cout << "Introduzca el "; SUBRAYADO; std::cout << "nombre"; APAGA; std::cout << " del paciente: ";
-  std::getline(std::cin, p1._nombre);
+  std::getline(std::cin, _nombre);
   //-----------------------------------------------------------------------------------------------------------
 
   
@@ -23,7 +21,7 @@ Paciente Paciente::rellenarDatosPaciente()
   //APELLIDOS DEL PACIENTE
   LUGAR(6,10);
   std::cout << "Introduzca los apellidos del paciente: ";
-  std::getline(std::cin, p1._apellidos);
+  std::getline(std::cin, _apellidos);
   //-----------------------------------------------------------------------------------------------------------
 
   
@@ -31,7 +29,7 @@ Paciente Paciente::rellenarDatosPaciente()
   //DNI DEL PACIENTE
   LUGAR(7,10);
   std::cout << "Introduzca el DNI del paciente: ";
-  std::cin >> p1._DNI;
+  std::cin >> _DNI;
   //-----------------------------------------------------------------------------------------------------------
 
   
@@ -47,7 +45,7 @@ Paciente Paciente::rellenarDatosPaciente()
   
   if(std::stoi(aux2)) //La función stoi requiere del standard c++11
   {
-    p1._fechaNacimiento.setDia(std::stoi(aux2));
+    _fechaNacimiento.setDia(std::stoi(aux2));
   }
   
   //Obtenemos la posición de la segunda barra
@@ -56,7 +54,7 @@ Paciente Paciente::rellenarDatosPaciente()
 
   if(std::stoi(aux2)) //La función stoi requiere del standard c++11
   {
-    p1._fechaNacimiento.setMes(std::stoi(aux2));
+    _fechaNacimiento.setMes(std::stoi(aux2));
   }
   
   //Obtenemos el año
@@ -64,7 +62,7 @@ Paciente Paciente::rellenarDatosPaciente()
   
   if(std::stoi(aux2)) //La función stoi requiere del standard c++11
   {
-    p1._fechaNacimiento.setYear(std::stoi(aux2));
+    _fechaNacimiento.setYear(std::stoi(aux2));
   }
   //-----------------------------------------------------------------------------------------------------------
 
@@ -73,12 +71,16 @@ Paciente Paciente::rellenarDatosPaciente()
   //TELEFONO DEL PACIENTE
   LUGAR(9,10);
   std::cout << "Introduzca el "; SUBRAYADO; std::cout << "telefono"; APAGA; std::cout << " del paciente: ";
-  std::cin >> p1._telefono;
+  std::cin >> _telefono;
   //-----------------------------------------------------------------------------------------------------------
 
+  int posicionCitaPaciente=10; //Utilizamos esta variable por si introducimos nuevas Citas
+  std::string respuesta="N";   //Por defecto, decimos que no introducimos mas citas
+  
+  do{
   //-----------------------------------------------------------------------------------------------------------
   //CITA DEL PACIENTE
-  LUGAR(10,10);
+  LUGAR(posicionCitaPaciente,10);
   std::cout << "Introduzca la cita del paciente (DD/MM/YYYY): ";
   std::cin >> cita;
   
@@ -88,7 +90,7 @@ Paciente Paciente::rellenarDatosPaciente()
   
   if(std::stoi(aux2)) //La función stoi requiere del standard c++11
   {
-    p1._citaPaciente.setDiaFechaCita(std::stoi(aux2));
+    _citaPaciente.setDiaFechaCita(std::stoi(aux2));
   }
   
   //Obtenemos la posición de la segunda barra
@@ -97,7 +99,7 @@ Paciente Paciente::rellenarDatosPaciente()
 
   if(std::stoi(aux2)) //La función stoi requiere del standard c++11
   {
-    p1._citaPaciente.setMesFechaCita(std::stoi(aux2));
+    _citaPaciente.setMesFechaCita(std::stoi(aux2));
   }
   
   //Obtenemos el año
@@ -105,16 +107,18 @@ Paciente Paciente::rellenarDatosPaciente()
   
   if(std::stoi(aux2)) //La función stoi requiere del standard c++11
   {
-    p1._citaPaciente.setYearFechaCita(std::stoi(aux2));
+    _citaPaciente.setYearFechaCita(std::stoi(aux2));
   }
   
   getchar();
-  LUGAR(11,10);
+  posicionCitaPaciente++; //Utilizamos esta variable por si introducimos nuevas Citas
+  LUGAR(posicionCitaPaciente,10);
   std::cout << "Introduzca el motivo de la cita: ";
   std::getline(std::cin, aux);
-  p1._citaPaciente.setMotivo(aux); 
+  _citaPaciente.setMotivo(aux);
   
-  LUGAR(12,10);
+  posicionCitaPaciente++; //Utilizamos esta variable por si introducimos nuevas Citas
+  LUGAR(posicionCitaPaciente,10);
   std::cout << "Introduzca la hora de la cita (HH:MM): ";
   std::cin >> aux;
   
@@ -124,20 +128,36 @@ Paciente Paciente::rellenarDatosPaciente()
    
   if(std::stoi(aux2)) //La función stoi requiere del standard c++11
   {
-    p1._citaPaciente.setHoraCita(std::stoi(aux2));
+    _citaPaciente.setHoraCita(std::stoi(aux2));
   }
   
   aux2=aux.substr(posicionBarra+1);
   
   if(std::stoi(aux2)) //La función stoi requiere del standard c++11
   {
-    p1._citaPaciente.setMinutosCita(std::stoi(aux2));
+    _citaPaciente.setMinutosCita(std::stoi(aux2));
+  }
+  
+  
+  posicionCitaPaciente++; //Utilizamos esta variable por si introducimos nuevas Citas
+  LUGAR(posicionCitaPaciente,10);
+  
+  //do{
+    std::cout << "¿Desea introducir una nueva cita en el historial del paciente? (S/N): ";
+    std::cin >> respuesta;
+  //}while(respuesta!="S" or respuesta!="N");
+  
+  if(respuesta=="S")
+  {
+    _historial.push_back(_citaPaciente);
+    BORRAR;
+    posicionCitaPaciente=5; //Utilizamos esta variable por si introducimos nuevas Citas
+    
   }
    
   //-----------------------------------------------------------------------------------------------------------
-
-  
-  return (p1);
+  }while(respuesta.compare("S")==0);
   
 }
+
 

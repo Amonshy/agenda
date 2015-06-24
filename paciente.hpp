@@ -9,6 +9,7 @@
 #define _PACIENTE_HPP_
 #include <string>
 #include "citas.hpp"
+#include <vector>
 
 //!  Definición de la clase Paciente
 class Paciente
@@ -21,6 +22,7 @@ private:
   Fecha _fechaNacimiento;	//!< Fecha de nacimiento del paciente
   int _telefono;		//!< Telefono del paciente
   Cita _citaPaciente;		//!< Cita del paciente
+  std::vector <Cita> _historial; //!< Historico de citas
   
 public:
   //Observers
@@ -56,6 +58,11 @@ public:
     return (_citaPaciente); 
   }
   
+  inline std::vector<Cita> getHistorial()const
+  {
+     return (_historial); 
+  }
+  
   //Modifiers
   //! \name Funciones de modificación de Paciente
   
@@ -79,7 +86,7 @@ public:
     _telefono=nuevoTelefono;
   }
   
-  static Paciente rellenarDatosPaciente();
+  void rellenarDatosPaciente();
 };
 
 #endif
