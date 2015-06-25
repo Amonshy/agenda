@@ -23,34 +23,38 @@ int main(int argc, char **argv)
   int borrar, modificar=0;
    
   do{
-    modificar=0;
-    BORRAR;
-    LUGAR(5,10);
-    std::cout << "Bienvenido al menú de selección: " << std::endl;
-    LUGAR(6,10);
-    std::cout << "1. Buscar paciente" << std::endl;
-    LUGAR(7,10);
-    std::cout << "2. Añadir paciente" << std::endl;
-    LUGAR(8,10);
-    std::cout << "3. Modificar paciente" << std::endl;
-    LUGAR(9,10);
-    std::cout << "4. Eliminar paciente" << std::endl;
-    LUGAR(10,10);
-    std::cout << "5. Listar agenda" << std::endl;
-    LUGAR(11,10);
-    std::cout << "6. Salir" << std::endl;
+    do{
+      modificar=0;
+      BORRAR;
+      LUGAR(5,10);
+      std::cout << "Bienvenido al menú de selección: " << std::endl;
+      LUGAR(6,10);
+      std::cout << "1. Buscar paciente" << std::endl;
+      LUGAR(7,10);
+      std::cout << "2. Añadir paciente" << std::endl;
+      LUGAR(8,10);
+      std::cout << "3. Modificar paciente" << std::endl;
+      LUGAR(9,10);
+      std::cout << "4. Eliminar paciente" << std::endl;
+      LUGAR(10,10);
+      std::cout << "5. Listar agenda" << std::endl;
+      LUGAR(11,10);
+      std::cout << "6. Salir" << std::endl;
 
-    LUGAR(15,10);
-    std::cout << "Opción: ";
-    std::cin >> opcion;
+      LUGAR(15,10);
+      std::cout << "Opción: ";
+      std::cin >> opcion;
+    }while(opcion<0 or opcion>6);
   
     switch(opcion)
     {  
       case 1:
+	//Buscar paciente
 	BORRAR;
 	LUGAR(5,10);
+	getchar();
 	std::cout << "Introduzca el nombre del paciente a buscar: ";
-	std::cin >> nombre;
+	std::getline(std::cin, nombre);
 	LUGAR(10,10);
 	std::cout << "Para la correcta visualización, abra su terminal en modo pantalla completa";
 	APAGA;
@@ -64,22 +68,24 @@ int main(int argc, char **argv)
 	std::cout << "continuar"; 
 	APAGA;
 	getchar();
-	getchar();
 	BORRAR;
 	agendaDentista.buscarPacienteEnBaseDeDatos(nombre);
 	break;
 	
       case 2:
+	//Añadir paciente
 	BORRAR;
 	p1.rellenarDatosPaciente();
 	agendaDentista.guardarEnBaseDeDatos(p1);
 	break;
 	
       case 3:
+	//Modificar paciente
 	BORRAR;
 	LUGAR(5,10);
 	std::cout << "Introduzca el dni del paciente a modificar: ";
 	std::cin >> dni;
+	dni.clear(); //Limpiamos el contenido de dni
 	
 	modificar=agendaDentista.modificarPacienteEnBaseDeDatos(dni);
 	if(modificar==0)
@@ -103,26 +109,29 @@ int main(int argc, char **argv)
 	break;
       
       case 4:
+	//Eliminar paciente
 	BORRAR;
 	LUGAR(5,10);
-	std::cout << "Introduzca el nombre del paciente a eliminar: ";
-	std::cin >> nombre;
-	borrar=agendaDentista.eliminarDeBaseDeDatos(nombre);
+	std::cout << "Introduzca el DNI del paciente a eliminar: ";
+	std::cin >> dni;
+	borrar=agendaDentista.eliminarDeBaseDeDatos(dni);
+	dni.clear(); //Limpiamos el contenido de dni
 	if(borrar>0)
 	{
-	  LUGAR(7,10);
+	  LUGAR(10,10);
 	  std::cout << "Se han eliminado " << borrar << " coincidencias";
 	  
 	}
 	else
 	{
-	  LUGAR(7,10);
+	  LUGAR(10,10);
 	  std::cout << "No se ha encontrado ninguna coincidencia";
 	  getchar();
 	}
 	break;
 	
       case 5:
+	//Listar pacientes
 	BORRAR;
 	LUGAR(10,10);
 	std::cout << "Para la correcta visualización, abra su terminal en modo pantalla completa";
@@ -143,6 +152,7 @@ int main(int argc, char **argv)
 	break;
 	
       case 6:
+	//Salir del programa
 	BORRAR;
 	LUGAR(5,10);
 	std::cout << "Gracias por usar el programa" << std::endl;
