@@ -11,33 +11,41 @@ void Paciente::rellenarDatosPaciente()
   getchar();
   //-----------------------------------------------------------------------------------------------------------
   //NOMBRE DEL PACIENTE
+  do{
   LUGAR(5,10);
   std::cout << "Introduzca el "; SUBRAYADO; std::cout << "nombre"; APAGA; std::cout << " del paciente: ";
-  std::getline(std::cin, _nombre);
+  std::getline(std::cin, _nombre);  
+  }while(_nombre.empty());
   //-----------------------------------------------------------------------------------------------------------
 
   
   //-----------------------------------------------------------------------------------------------------------
   //APELLIDOS DEL PACIENTE
+  do{
   LUGAR(6,10);
   std::cout << "Introduzca los apellidos del paciente: ";
   std::getline(std::cin, _apellidos);
+  }while(_apellidos.empty());
   //-----------------------------------------------------------------------------------------------------------
 
   
   //-----------------------------------------------------------------------------------------------------------
   //DNI DEL PACIENTE
+  do{
   LUGAR(7,10);
   std::cout << "Introduzca el DNI del paciente: ";
-  std::cin >> _DNI;
+  std::cin >> _DNI;  
+  }while(_DNI.empty());
   //-----------------------------------------------------------------------------------------------------------
 
   
   //-----------------------------------------------------------------------------------------------------------
   //FECHA DE NACIMIENTO DEL PACIENTE
+  do{
   LUGAR(8,10);
   std::cout << "Introduzca la fecha de nacimiento (DD/MM/YYYY): ";
   std::cin >> aux;
+  }while(aux.empty());
   
   //Obtenemos la posición de la primera barra
   posicionBarra=aux.find_first_of("/");
@@ -81,8 +89,10 @@ void Paciente::rellenarDatosPaciente()
   //-----------------------------------------------------------------------------------------------------------
   //CITA DEL PACIENTE
   LUGAR(posicionCitaPaciente,10);
+  do{
   std::cout << "Introduzca la cita del paciente (DD/MM/YYYY): ";
   std::cin >> cita;
+  }while(cita.empty());
   
   //Obtenemos la posicón de la primera barra
   posicionBarra=cita.find_first_of("/");
