@@ -28,6 +28,13 @@ public:
   //Observers
   //! \name Funciones de consulta de Paciente
   
+  ~Paciente()
+  {
+    //Limpiamos el historial
+    _historial.clear();
+    _historial.shrink_to_fit();
+  }
+  
   inline std::string getNombre()const
   {
     return (_nombre);
