@@ -41,7 +41,7 @@ void Agenda::guardarEnBaseDeDatos(const Paciente &p1) const
   
   ficheroSalida << "\n";
   
-  LUGAR(14,10);
+  LUGAR(15,10);
   std::cout << "Paciente añadido correctamente en el fichero correctamente en el fichero." << std::endl;
   
   ficheroSalida.close();
@@ -352,9 +352,7 @@ int Agenda::modificarPacienteEnBaseDeDatos(const string& DNI) const
   
   while(getline(ficheroEntrada, nombre, ';') && getline(ficheroEntrada, apellidos, ';') && getline(ficheroEntrada, dniF, ';') && modificar!=10)
   {
-    //std::cout << "DNI: " << DNI << std::endl;
-    //std::cout << "DNIF: " << dniF << std::endl;
-    
+   
     if(dniF.compare(DNI)==0)
     {
       //Nombre;Apellidos;DNI;DiaNacimiento;MesNacimiento;AñoNacimiento;Telefono;DiaCita;MesCita;AñoCita;MotivoCita;HoraCita;MinutosCita;Número;Historial
@@ -396,9 +394,12 @@ int Agenda::modificarPacienteEnBaseDeDatos(const string& DNI) const
       {
 	case 1:
 	  //NOMBRE DEL PACIENTE
+	  do{
 	  LUGAR(5,10);
+
 	  std::cout << "Introduzca el nuevo nombre del paciente: ";
 	  std::getline(std::cin, nombre);
+	  }while(nombre.empty());
 	  
 	  getline(ficheroEntrada, aux, '\n');
 	  ficheroSalida << nombre << ";" << apellidos << ";" << dniF << ";" << aux << "\n";
@@ -408,9 +409,11 @@ int Agenda::modificarPacienteEnBaseDeDatos(const string& DNI) const
 	  
 	case 2:
 	  //APELLIDOS DEL PACIENTE
+	  do{
 	  LUGAR(5,10);
 	  std::cout << "Introduzca los nuevos apellidos del paciente: ";
 	  std::getline(std::cin, apellidos);
+	  }while(apellidos.empty());
 	  
 	  getline(ficheroEntrada, aux, '\n');
 	  ficheroSalida << nombre << ";" << apellidos << ";" << dniF << ";" << aux << "\n";
@@ -420,9 +423,11 @@ int Agenda::modificarPacienteEnBaseDeDatos(const string& DNI) const
 	  
 	case 3:
 	  //DNI DEL PACIENTE
+	  do{
 	  LUGAR(5,10);
 	  std::cout << "Introduzca el nuevo DNI del paciente: ";
 	  std::cin >> dniF;
+	  }while(dniF.empty());
 	  
 	  getline(ficheroEntrada, aux, '\n');
 	  ficheroSalida << nombre << ";" << apellidos << ";" << dniF << ";" << aux << "\n";
@@ -432,9 +437,11 @@ int Agenda::modificarPacienteEnBaseDeDatos(const string& DNI) const
 	  
 	case 4:
 	  //FECHA DE NACIMIENTO DEL PACIENTE
+	  do{
 	  LUGAR(5,10);
 	  std::cout << "Introduzca la nueva fecha de nacimiento (DD/MM/YYYY): ";
 	  std::cin >> auxfecha;
+	  }while(auxfecha.empty());
 
 	  //Obtenemos la fecha de nacimiento antigua
 	  getline(ficheroEntrada, diaN, ';');
@@ -476,9 +483,11 @@ int Agenda::modificarPacienteEnBaseDeDatos(const string& DNI) const
 	  
 	case 6:
 	  //FECHA DE LA CITA DEL PACIENTE
+	  do{
 	  LUGAR(5,10);
 	  std::cout << "Introduzca la nueva fecha de la cita (DD/MM/YYYY): ";
 	  std::cin >> auxfecha;
+	  }while(auxfecha.empty());
 	  
 	  getline(ficheroEntrada, diaN, ';');
 	  getline(ficheroEntrada, mesN, ';');
@@ -503,7 +512,7 @@ int Agenda::modificarPacienteEnBaseDeDatos(const string& DNI) const
 	  
 	  getline(ficheroEntrada, aux, '\n');
 	  ficheroSalida << nombre << ";" << apellidos << ";" << dniF << ";" << diaN << ";" << mesN << ";" << yearN << ";"
-	  << telefono << ";" << diaC << ";" << mesC << ";" << yearC << ";" << aux << "\n";
+	  << telefono << ";" << std::stoi(diaC) << ";" << std::stoi(mesC) << ";" << yearC << ";" << aux << "\n";
 	  
 	  modificar=6;
 	  break;
@@ -521,9 +530,11 @@ int Agenda::modificarPacienteEnBaseDeDatos(const string& DNI) const
 	  //Obtenemos el motivo antiguo
 	  getline(ficheroEntrada, motivo, ';');
 
+	  do{
 	  LUGAR(5,10);
 	  std::cout << "Introduzca el nuevo motivo de la cita del paciente: ";
 	  std::getline(std::cin, motivo);
+	  }while(motivo.empty());
 	  
 	  getline(ficheroEntrada, aux, '\n');
 	  ficheroSalida << nombre << ";" << apellidos << ";" << dniF << ";" << diaN << ";" << mesN << ";" << yearN << ";"
@@ -533,9 +544,11 @@ int Agenda::modificarPacienteEnBaseDeDatos(const string& DNI) const
 	  
 	case 8:
 	  //HORA DE LA CITA DEL PACIENTE
+	  do{
 	  LUGAR(5,10);
 	  std::cout << "Introduzca la hora de la cita (HH:MM): ";
 	  std::cin >> auxhoracita;
+	  }while(auxhoracita.empty());
 	  
 	  getline(ficheroEntrada, diaN, ';');
 	  getline(ficheroEntrada, mesN, ';');
@@ -567,9 +580,11 @@ int Agenda::modificarPacienteEnBaseDeDatos(const string& DNI) const
 	case 9:
 	  //NUEVA CITA A INCLUIR
 	  //---------------------------------------------------------------------------------------------------------------------
+	  do{
 	  LUGAR(5,10);
 	  std::cout << "Introduzca la fecha de la cita (DD/MM/YYYY): ";
 	  std::cin >> auxfecha;
+	  }while(auxfecha.empty());
 	  
 	  getline(ficheroEntrada, diaN, ';');
 	  getline(ficheroEntrada, mesN, ';');
@@ -601,16 +616,20 @@ int Agenda::modificarPacienteEnBaseDeDatos(const string& DNI) const
 	  antigua.setMotivo(motivo);
 	  
 	  getchar();
+	  do{
 	  LUGAR(6,10);
 	  std::cout << "Introduzca el motivo de la cita del paciente: ";
 	  std::getline(std::cin, motivo);
+	  }while(motivo.empty());
 
 	  //---------------------------------------------------------------------------------------------------------------------
 	  
 	  //HORA DE LA CITA DEL PACIENTE
+	  do{
 	  LUGAR(7,10);
 	  std::cout << "Introduzca la hora de la cita (HH:MM): ";
 	  std::cin >> auxhoracita;
+	  }while(auxhoracita.empty());
 	  
 	  //Obtenemos la hora antigua
 	  getline(ficheroEntrada, horaC, ';');
@@ -630,7 +649,7 @@ int Agenda::modificarPacienteEnBaseDeDatos(const string& DNI) const
 	  getline(ficheroEntrada, aux, '\n');
 
 	   ficheroSalida << nombre << ";" << apellidos << ";" << dniF << ";" << diaN << ";" << mesN << ";" << yearN << ";"
-	   << telefono << ";" << diaC << ";" << mesC << ";" << yearC << ";" << motivo << ";" << horaC << ";" << minutosC << ";" << numCasos << ";"
+	   << telefono << ";" << std::stoi(diaC) << ";" << std::stoi(mesC) << ";" << yearC << ";" << motivo << ";" << horaC << ";" << minutosC << ";" << numCasos << ";"
 	   << antigua.getDiaFechaCita() << ";" << antigua.getMesFechaCita() << ";" << antigua.getYearFechaCita() << ";" << antigua.getMotivo() << ";"
 	   << antigua.getHoraCita() << ";" << antigua.getMinutosCita() << ";" << aux << "\n";
 	  
