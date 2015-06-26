@@ -85,7 +85,6 @@ int main(int argc, char **argv)
 	LUGAR(5,10);
 	std::cout << "Introduzca el dni del paciente a modificar: ";
 	std::cin >> dni;
-	dni.clear(); //Limpiamos el contenido de dni
 	
 	modificar=agendaDentista.modificarPacienteEnBaseDeDatos(dni);
 	if(modificar==0)
@@ -102,10 +101,19 @@ int main(int argc, char **argv)
 	  }
 	  else
 	  {
-	    LUGAR(7,10);
-	    std::cout << "La modificación ha sido un exito";
+	    if(modificar==9)
+	    {
+	      LUGAR(10,10);
+	      std::cout << "La modificación nueva cita ha sido insertada correctamente";
+	    }
+	    else
+	    {
+	      LUGAR(10,10);
+	      std::cout << "La modificación ha sido un exito";
+	    }
 	  }
 	}
+	dni.clear(); //Limpiamos el contenido de dni
 	break;
       
       case 4:
