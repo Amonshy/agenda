@@ -1,4 +1,4 @@
-OBJECTS = main.o paciente.o agenda.o
+OBJECTS = paciente.o agenda.o main.o
 CPPFLAGS = -c -g -ansi -Wall -std=c++11 
 
 agenda.x: $(OBJECTS)
@@ -7,10 +7,10 @@ agenda.x: $(OBJECTS)
 main.o: main.cpp macros.hpp agenda.hpp
 	g++ $(CPPFLAGS) main.cpp 
 
-paciente.o: paciente.cpp paciente.hpp citas.hpp
+paciente.o: paciente.cpp macros.hpp paciente.hpp citas.hpp
 	g++ $(CPPFLAGS) paciente.cpp 
 
-agenda.o: agenda.cpp agenda.hpp
+agenda.o: agenda.cpp macros.hpp agenda.hpp
 	g++ $(CPPFLAGS) agenda.cpp 
 	
 .PHONY: clean
