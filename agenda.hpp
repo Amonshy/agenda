@@ -46,7 +46,7 @@ public:
   
   void listarBaseDeDatos()const;
   
-  int eliminarDeBaseDeDatos(const std::string& nombreEliminar)const;
+  int eliminarDeBaseDeDatos(const std::string& DNI)const;
   
   void buscarPacienteEnBaseDeDatos(const std::string &nombrePaciente)const;
   

@@ -25,6 +25,7 @@ void Agenda::guardarEnBaseDeDatos(const Paciente &p1) const
   
   if(p1.getHistorial().size()>0)
   {
+    ficheroSalida << p1.getHistorial().size() << ";";
     unsigned int i=0;
     while(i<p1.getHistorial().size())
     {
@@ -32,6 +33,10 @@ void Agenda::guardarEnBaseDeDatos(const Paciente &p1) const
       << p1.getHistorial().at(i).getMotivo() << ";" << p1.getHistorial().at(i).getHoraCita() << ";" << p1.getHistorial().at(i).getMinutosCita() << ";"; 
       i++;
     }
+  }
+  else
+  {
+    ficheroSalida << "0" << ";";
   }
   
   ficheroSalida << "\n";
@@ -55,7 +60,7 @@ void Agenda::listarBaseDeDatos() const
     exit (-1);
   }
   
-  std::string horaC, minutosC, dni, aux;
+  std::string horaC, minutosC, dni, aux, historial;
   std::string diaN, mesN, yearN, diaC, mesC, yearC;
   std::string nombre, apellidos, telefono, motivo;
   int i=6, j=0;
@@ -66,7 +71,7 @@ void Agenda::listarBaseDeDatos() const
   while(getline(ficheroEntrada, nombre, ';') and getline(ficheroEntrada, apellidos, ';') and getline(ficheroEntrada, dni, ';') and getline(ficheroEntrada, diaN, ';')
   and getline(ficheroEntrada, mesN, ';') and getline(ficheroEntrada, yearN, ';') and getline(ficheroEntrada, telefono, ';') and  getline(ficheroEntrada, diaC, ';')
   and getline(ficheroEntrada, mesC, ';') and getline(ficheroEntrada, yearC, ';') and getline(ficheroEntrada, motivo, ';') and getline(ficheroEntrada, horaC, ';')
-  and getline(ficheroEntrada, minutosC, ';') and getline(ficheroEntrada, aux, '\n'))
+  and getline(ficheroEntrada, minutosC, ';') and getline(ficheroEntrada, historial, ';'))
   {
     LUGAR(i,5);
     std::cout << j;
@@ -95,18 +100,60 @@ void Agenda::listarBaseDeDatos() const
       LUGAR(i,129);
       std::cout << horaC << ":" << minutosC;
     }
-    i+=1; // Se utiliza para la correcta visualización
+    i++; // Se utiliza para la correcta visualización
     j++; // Para la posición
+    
+    //Sino hay mas citas en el historial
+    if(std::stoi(historial)==0)
+    {
+      getline(ficheroEntrada, aux, '\n');
+    }
+    else
+    {
+      //Si hay citas en el historial
+      int contador=0;
+      do{
+	getline(ficheroEntrada, diaC, ';');
+	getline(ficheroEntrada, mesC, ';');
+	getline(ficheroEntrada, yearC, ';');
+	getline(ficheroEntrada, motivo, ';');
+	getline(ficheroEntrada, horaC, ';');
+	getline(ficheroEntrada, minutosC, ';');
+	
+	LUGAR(i,105);
+	std::cout << "\t" << diaC << "/" << mesC << "/" << yearC;
+	LUGAR(i,140);
+	std::cout << "\t" << motivo << "\t";
+	
+	if(std::stoi(minutosC)<10)
+	{
+	  LUGAR(i,129);
+	  std::cout << horaC << ":0" << minutosC;
+	}
+	else
+	{
+	  LUGAR(i,129);
+	  std::cout << horaC << ":" << minutosC;
+	}
+	i++; //Correcta visualización
+	contador++;
+      }while(contador<std::stoi(historial));
+      
+      getline(ficheroEntrada, aux, '\n');
+      
+    }
+    
+    i++; //Correcta visualización
     
   } //end while
   
 }
 
-int Agenda::eliminarDeBaseDeDatos(const string& nombreEliminar) const
+int Agenda::eliminarDeBaseDeDatos(const string& DNI) const
 {
   std::ifstream ficheroEntrada;
   std::ofstream ficheroSalida;
-  std::string nombre, aux;
+  std::string nombre, apellidos, dniExtraido, aux, respuesta;
   int borrar=0;
   
   ficheroEntrada.open(getBaseDeDatos());
@@ -120,16 +167,31 @@ int Agenda::eliminarDeBaseDeDatos(const string& nombreEliminar) const
   }
   
   //Buscamos por el nombre de paciente y ademas obtenemos toda la línea restante con los datos
-  while(getline(ficheroEntrada, nombre, ';') and getline(ficheroEntrada, aux, '\n'))
+  while(getline(ficheroEntrada, nombre, ';') and getline(ficheroEntrada, apellidos, ';') and getline(ficheroEntrada, dniExtraido, ';') and getline(ficheroEntrada, aux, '\n'))
   {
     //Si el nombre coincide con el que buscamos, lo eliminamos
-    if(nombre.compare(nombreEliminar)==0)
+    if(dniExtraido.compare(DNI)==0)
     {
-      borrar++;
+      do{
+	BORRAR;
+	LUGAR(5,10);
+	std::cout << "¿Esta seguro que desea eliminar al paciente " << nombre << " ? (S/N): ";
+	std::cin >> respuesta;
+	
+      }while(respuesta!="S" and respuesta!="N");
+      
+      if(respuesta.compare("N")==0)
+      {
+	ficheroSalida << nombre << ";" << apellidos << ";" << dniExtraido << ";" << aux << "\n";
+      }
+      else
+      {
+	borrar++;
+      }
     }
     else
     {
-      ficheroSalida << nombre << ";" << aux << "\n";
+      ficheroSalida << nombre << ";" << apellidos << ";" << dniExtraido << ";" << aux << "\n";
     }
   }
   
@@ -153,8 +215,10 @@ void Agenda::buscarPacienteEnBaseDeDatos(const string& nombrePaciente) const
     exit (-1);
   }
   
+  Paciente p1;
+  
   int i=6, j=0;
-  std::string horaC, minutosC, dni;
+  std::string horaC, minutosC, dni, historial;
   std::string diaN, mesN, yearN, diaC, mesC, yearC;
   std::string apellidos, telefono, motivo;
   
@@ -178,7 +242,7 @@ void Agenda::buscarPacienteEnBaseDeDatos(const string& nombrePaciente) const
       getline(ficheroEntrada, motivo, ';');
       getline(ficheroEntrada, horaC, ';');
       getline(ficheroEntrada, minutosC, ';');
-      getline(ficheroEntrada, aux, '\n');
+      getline(ficheroEntrada, historial, ';');
       
       LUGAR(i,5);
       std::cout << j;
@@ -209,7 +273,47 @@ void Agenda::buscarPacienteEnBaseDeDatos(const string& nombrePaciente) const
       }
       i+=1; // Se utiliza para la correcta visualización
       j++; // Para la posición
+      
+      //Sino hay mas citas en el historial
+      if(std::stoi(historial)==0)
+      {
+	getline(ficheroEntrada, aux, '\n');
       }
+      else
+      {
+	//Si hay citas en el historial
+	int contador=0;
+	do{
+	  getline(ficheroEntrada, diaC, ';');
+	  getline(ficheroEntrada, mesC, ';');
+	  getline(ficheroEntrada, yearC, ';');
+	  getline(ficheroEntrada, motivo, ';');
+	  getline(ficheroEntrada, horaC, ';');
+	  getline(ficheroEntrada, minutosC, ';');
+	  
+	  LUGAR(i,105);
+	  std::cout << "\t" << diaC << "/" << mesC << "/" << yearC;
+	  LUGAR(i,140);
+	  std::cout << "\t" << motivo << "\t";
+	  
+	  if(std::stoi(minutosC)<10)
+	  {
+	    LUGAR(i,129);
+	    std::cout << horaC << ":0" << minutosC;
+	  }
+	  else
+	  {
+	    LUGAR(i,129);
+	    std::cout << horaC << ":" << minutosC;
+	  }
+	  i++; //Correcta visualización
+	  contador++;
+	}while(contador<std::stoi(historial));
+	
+	getline(ficheroEntrada, aux, '\n');
+      } 
+      i++; //Correcta visualización  
+    }
     else
     {
       //Si no coincide, pasamos por alto el resto de información
@@ -227,8 +331,8 @@ int Agenda::modificarPacienteEnBaseDeDatos(const string& DNI) const
   ficheroEntrada.open(getBaseDeDatos());
   ficheroSalida.open(getBaseDeDatosAuxiliar());
   
-  Paciente p1;
-  int modificar=0;
+  Cita antigua;
+  int modificar=0, numCasos;
   int opcion;
   
   if(!ficheroEntrada or !ficheroSalida)
@@ -238,7 +342,7 @@ int Agenda::modificarPacienteEnBaseDeDatos(const string& DNI) const
     exit (-1);
   }
   
-  std::string auxfecha, auxhoracita;
+  std::string auxfecha, auxhoracita, casosHistorial;
   int posicionBarra, posicionBarra2;
   
   std::string nombre, aux;
@@ -248,13 +352,14 @@ int Agenda::modificarPacienteEnBaseDeDatos(const string& DNI) const
   
   while(getline(ficheroEntrada, nombre, ';') && getline(ficheroEntrada, apellidos, ';') && getline(ficheroEntrada, dniF, ';') && modificar!=10)
   {
-    //std::cout << DNI << std::endl;
-    //std::cout << dniF << std::endl;
+    //std::cout << "DNI: " << DNI << std::endl;
+    //std::cout << "DNIF: " << dniF << std::endl;
     
     if(dniF.compare(DNI)==0)
     {
-      //Nombre;Apellidos;DNI;DiaNacimiento;MesNacimiento;AñoNacimiento;Telefono;DiaCita;MesCita;AñoCita;MotivoCita;HoraCita;MinutosCita
+      //Nombre;Apellidos;DNI;DiaNacimiento;MesNacimiento;AñoNacimiento;Telefono;DiaCita;MesCita;AñoCita;MotivoCita;HoraCita;MinutosCita;Número;Historial
       do{
+      BORRAR;
       LUGAR(7,10);
       std::cout << "Seleccione una opción";
       LUGAR(9,11);
@@ -274,13 +379,15 @@ int Agenda::modificarPacienteEnBaseDeDatos(const string& DNI) const
       LUGAR(16,11);
       std::cout << "8. Modificar hora de la cita";
       LUGAR(17,11);
-      std::cout << "9. No modificar nada";
+      std::cout << "9. Añadir nueva cita";
+      LUGAR(18,11);
+      std::cout << "10. No modificar nada";
       
-      LUGAR(19,10);
+      LUGAR(20,10);
       std::cout << "Opción: ";
       std::cin >> opcion;
       
-      }while(opcion<0 or opcion>9);
+      }while(opcion<0 or opcion>10);
       
       BORRAR;
       getchar();
@@ -458,6 +565,79 @@ int Agenda::modificarPacienteEnBaseDeDatos(const string& DNI) const
 	  break;
 	  
 	case 9:
+	  //NUEVA CITA A INCLUIR
+	  //---------------------------------------------------------------------------------------------------------------------
+	  LUGAR(5,10);
+	  std::cout << "Introduzca la fecha de la cita (DD/MM/YYYY): ";
+	  std::cin >> auxfecha;
+	  
+	  getline(ficheroEntrada, diaN, ';');
+	  getline(ficheroEntrada, mesN, ';');
+	  getline(ficheroEntrada, yearN, ';');
+	  getline(ficheroEntrada, telefono, ';');
+	  
+	  //Obtenemos la fecha antigua
+	  getline(ficheroEntrada, diaC, ';');
+	  getline(ficheroEntrada, mesC, ';');
+	  getline(ficheroEntrada, yearC, ';');
+	  antigua.setDiaFechaCita(std::stoi(diaC));
+	  antigua.setMesFechaCita(std::stoi(mesC));
+	  antigua.setYearFechaCita(std::stoi(yearC));
+	  
+	  //Obtenemos la posición de la primera barra
+	  posicionBarra=auxfecha.find_first_of("/");
+	  diaC= auxfecha.substr(0,posicionBarra);
+
+	  //Obtenemos la posición de la segunda barra
+	  posicionBarra2=auxfecha.find_first_of("/",posicionBarra+1);
+	  mesC= auxfecha.substr(posicionBarra+1,posicionBarra2-3);  //El -3 es pq sale un error que no tiene ni pies ni cabeza
+	  
+	  //Obtenemos el año
+	  yearC=auxfecha.substr(posicionBarra2+1);
+	  
+	  //---------------------------------------------------------------------------------------------------------------------
+	  //Obtenemos el motivo antiguo
+	  getline(ficheroEntrada, motivo, ';');
+	  antigua.setMotivo(motivo);
+	  
+	  getchar();
+	  LUGAR(6,10);
+	  std::cout << "Introduzca el motivo de la cita del paciente: ";
+	  std::getline(std::cin, motivo);
+
+	  //---------------------------------------------------------------------------------------------------------------------
+	  
+	  //HORA DE LA CITA DEL PACIENTE
+	  LUGAR(7,10);
+	  std::cout << "Introduzca la hora de la cita (HH:MM): ";
+	  std::cin >> auxhoracita;
+	  
+	  //Obtenemos la hora antigua
+	  getline(ficheroEntrada, horaC, ';');
+	  antigua.setHoraCita(std::stoi(horaC));
+	  getline(ficheroEntrada, minutosC, ';');
+	  antigua.setMinutosCita(std::stoi(minutosC));
+	  
+	  //Obtenemos la posición de los :
+	  posicionBarra=auxhoracita.find_first_of(":");
+	  horaC=auxhoracita.substr(0,posicionBarra);
+	  
+	  minutosC=auxhoracita.substr(posicionBarra+1); 
+	  
+	  getline(ficheroEntrada, casosHistorial, ';');
+	  numCasos=std::stoi(casosHistorial)+1; 
+	  
+	  getline(ficheroEntrada, aux, '\n');
+
+	   ficheroSalida << nombre << ";" << apellidos << ";" << dniF << ";" << diaN << ";" << mesN << ";" << yearN << ";"
+	   << telefono << ";" << diaC << ";" << mesC << ";" << yearC << ";" << motivo << ";" << horaC << ";" << minutosC << ";" << numCasos << ";"
+	   << antigua.getDiaFechaCita() << ";" << antigua.getMesFechaCita() << ";" << antigua.getYearFechaCita() << ";" << antigua.getMotivo() << ";"
+	   << antigua.getHoraCita() << ";" << antigua.getMinutosCita() << ";" << aux << "\n";
+	  
+	  modificar=9;
+	  break;
+	  
+	case 10:
 	  modificar=10;
 	  break;
 	
