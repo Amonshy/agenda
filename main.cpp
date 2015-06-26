@@ -121,9 +121,11 @@ int main(int argc, char **argv)
       case 4:
 	//Eliminar paciente
 	BORRAR;
+	do{
 	LUGAR(5,10);
 	std::cout << "Introduzca el DNI del paciente a eliminar: ";
 	std::cin >> dni;
+	}while(dni.empty());
 	borrar=agendaDentista.eliminarDeBaseDeDatos(dni);
 	dni.clear(); //Limpiamos el contenido de dni
 	if(borrar>0)
