@@ -82,9 +82,11 @@ int main(int argc, char **argv)
       case 3:
 	//Modificar paciente
 	BORRAR;
+	do{
 	LUGAR(5,10);
 	std::cout << "Introduzca el dni del paciente a modificar: ";
 	std::cin >> dni;
+	}while(dni.empty());
 	
 	modificar=agendaDentista.modificarPacienteEnBaseDeDatos(dni);
 	if(modificar==0)
